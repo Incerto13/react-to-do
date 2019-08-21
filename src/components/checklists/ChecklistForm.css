@@ -1,0 +1,29 @@
+body {
+  margin-bottom: 5%;
+}
+
+.task {
+  display: inline-block;
+  margin-left: 60px;
+  margin-top: 10px;
+  border-style: double;
+  border-color: gray;
+  padding: 10px;
+}
+
+.index-num {
+}
+
+.delete-task-button {
+  margin-left: 85%;
+}
+
+.add-task-button {
+  margin-top: 15px;
+  margin-left: 85%;
+}
+
+.save-button {
+  margin-top: 50px;
+  float: left;
+}
