@@ -1,0 +1,20 @@
+version: "3"
+services:
+  frontend:
+    container_name: to-do_web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    image: to-do_web
+    ports:
+      - "8010:80"
+  backend:
+    container_name: to-do_server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: node:lts-slim
+    ports:
+      - "8110:3001"
+    volumes:
+      - ./server:/usr/src/app
