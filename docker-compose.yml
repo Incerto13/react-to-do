@@ -5,7 +5,6 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile
-    image: to-do_web
     ports:
       - "8010:80"
   backend:
@@ -13,7 +12,6 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: node:lts-slim
     ports:
       - "8110:3001"
     volumes:
