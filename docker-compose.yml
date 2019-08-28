@@ -2,13 +2,18 @@ version: "3"
 services:
   frontend:
     container_name: to-do_web
+    restart: unless-stopped
+    env_file: ./web/.env
     build:
       context: ./web
       dockerfile: Dockerfile
     ports:
       - "8010:80"
+    links:
+      - backend
   backend:
     container_name: to-do_server
+    restart: unless-stopped
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -16,3 +21,4 @@ services:
       - "8110:3001"
     volumes:
       - ./server:/usr/src/app
+      - /usr/src/app/node_modules

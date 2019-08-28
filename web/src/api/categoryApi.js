@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://localhost:8110/categories/";
+const baseUrl = process.env.REACT_APP_DOMAIN_SERVER + "/categories/";
 
 export function getCategories() {
   // fetch defaults to "GET" method
