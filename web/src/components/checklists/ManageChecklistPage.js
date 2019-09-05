@@ -38,9 +38,9 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
     const { name, value } = event.target; // retain local ref to event
     // will only apply to elements in the task array
     if (typeof index !== "undefined") {
-      /* to copy array of objects, must use map, [...notation] 
-      create new array but just POINT to ORIGINAL objects
-      and mute state
+      /* To copy array of objects, must use map and  {...notation}!!!
+      to create a deep copy. If you only did a shallow copy, you are merely creating
+      a new array that points to the original objects, which will result in you mutating state. 
       */
       const newTasks = checklist.tasks.map(task => {
         return { ...task };
