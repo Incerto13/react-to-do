@@ -7,7 +7,7 @@ on:
     branches: [ "staging" ]
 
 env: 
-  ENV: staging
+  ENV: staging 
   DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   ENVS: ${{ secrets.STAGING_ENVS }}
