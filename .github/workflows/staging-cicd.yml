@@ -1,0 +1,29 @@
+name: Staging CI/CD
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "staging" ]
+  pull_request: 
+    branches: [ "staging" ]
+
+env: 
+  ENV: staging
+  DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  ENVS: ${{ secrets.STAGING_ENVS }}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Docker Login
+        run:
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Generate .env file
+        run: echo "$ENVS" > .env
+      - name: Build and Push to Docker Hub
+        run: |
+          bash run-docker.sh 
+          docker push incerto13/react-to-do_server:staging-latest 
+          docker push incerto13/react-to-do_web:staging-latest 

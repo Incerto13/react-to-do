@@ -1,7 +1,7 @@
-version: "3"
+
 services:
   frontend:
-    container_name: to-do_web
+    container_name: web
     restart: unless-stopped
     env_file: ./web/.env
     build:
@@ -11,8 +11,9 @@ services:
       - "8010:80"
     links:
       - backend
+
   backend:
-    container_name: to-do_server
+    container_name: server
     restart: unless-stopped
     build:
       context: ./server
