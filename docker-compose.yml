@@ -2,6 +2,8 @@
 services:
   frontend:
     container_name: web
+    environment:
+      ENV: ${ENV}
     image: incerto13/react-to-do_web:${ENV}-latest
     restart: unless-stopped
     env_file: ./web/.env
@@ -15,6 +17,8 @@ services:
 
   backend:
     container_name: server
+    environment:
+      ENV: ${ENV}
     image: incerto13/react-to-do_server:${ENV}-latest
     restart: unless-stopped
     build:
