@@ -8,5 +8,7 @@ bash run-docker-dev.sh
 ```
 
 ## Running in docker (staging or prod)
-wil be run by pulling image from dockerhub and running from parent docker-compose file
+```bash
+bash run-docker.sh
+```
 
