@@ -1,14 +1,18 @@
 
 ## Running locally
+```bash
+```
 
 
-## Running in docker (locally)
+## Running in docker (build locally)
 ```bash
 bash run-docker-dev.sh
 ```
+Open [http://localhost:8010](http://localhost:8010) to view it in the browser.
 
-## Running in docker (staging or prod)
+## Running in docker
 ```bash
 bash run-docker.sh
 ```
+
 

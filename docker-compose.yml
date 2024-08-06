@@ -1,7 +1,7 @@
 
 services:
   web:
-    container_name: web
+    container_name: react-to-do_web
     environment:
       ENV: ${ENV}
     image: incerto13/react-to-do_web:${ENV}-latest
@@ -14,7 +14,7 @@ services:
       - 8010:80
 
   server:
-    container_name: server
+    container_name: react-to-do_server
     environment:
       ENV: ${ENV}
     image: incerto13/react-to-do_server:${ENV}-latest
@@ -24,6 +24,4 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8110:3001
-    # volumes:
-    #   - ./server:/usr/src/app
-    #   - /usr/src/app/node_modules
+

@@ -1,12 +1,11 @@
-# only run from context of parent incerto-k8 directory when orchestrating all portfolio apps in local dev
 
 services:
   web:
     container_name: react-to-do_web
     restart: unless-stopped
-    env_file: react-to-do/web/.env
+    env_file: ./web/.env
     build:
-      context: react-to-do/web
+      context: ./web
       dockerfile: Dockerfile
     ports:
       - 8010:80
@@ -15,7 +14,7 @@ services:
     container_name: react-to-do_server
     restart: unless-stopped
     build:
-      context: react-to-do/server
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - 8110:3001
