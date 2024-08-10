@@ -2,19 +2,19 @@
 services:
   web:
     container_name: react-to-do_web
-    restart: unless-stopped
     env_file: ./web/.env
     build:
       context: ./web
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - 8010:80
 
   server:
     container_name: react-to-do_server
-    restart: unless-stopped
     build:
       context: ./server
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - 8110:3001
