@@ -86,7 +86,7 @@ server.post("/checklists/", function(req, res, next) {
 });
 
 // Use default router
-server.use('/api', router);
+server.use(router);
 
 // Start server
 const port = 3001;
