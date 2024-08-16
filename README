@@ -25,6 +25,6 @@ Open [http://localhost:8010](http://localhost:8010) to view it in the browser.
 ## Running in docker
 ```bash
 bash run-docker.sh   
-```
+``` 
 
 
