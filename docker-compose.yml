@@ -1,6 +1,19 @@
 
 services:
-  web:
+
+  react-to-do_server:
+    container_name: react-to-do_server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      ENV: ${ENV}
+    image: incerto13/react-to-do_server:${ENV}-latest
+    restart: unless-stopped
+    ports:
+      - 8110:3001
+
+  react-to-do_web:
     container_name: react-to-do_web
     env_file: ./web/.env
     build:
@@ -13,15 +26,4 @@ services:
     ports:
       - 8010:80
 
-  server:
-    container_name: react-to-do_server
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    environment:
-      ENV: ${ENV}
-    image: incerto13/react-to-do_server:${ENV}-latest
-    restart: unless-stopped
-    ports:
-      - 8110:3001
 

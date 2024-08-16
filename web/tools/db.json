@@ -61,12 +61,20 @@
       "slug": "monday-morning",
       "tasks": [
         {
+          "id": 1,
+          "title": "Run 15 miles",
+          "body": "Don't stop for water",
+          "category": "Fitness",
+          "completed": true,
+          "timeOfCompletion": 1565604954897
+        },
+        {
           "id": 2,
           "title": "Respond to Emails",
           "body": "also update calendar for the week",
           "category": "Work",
-          "completed": true,
-          "timeOfCompletion": 1722948860325
+          "completed": false,
+          "timeOfCompletion": null
         },
         {
           "id": 3,
@@ -83,14 +91,6 @@
           "category": "Work",
           "completed": false,
           "timeOfCompletion": null
-        },
-        {
-          "id": 1,
-          "title": "Run 15 miles",
-          "body": "Don't stop for water",
-          "category": "Fitness",
-          "completed": true,
-          "timeOfCompletion": 1565604954897
         }
       ]
     },
