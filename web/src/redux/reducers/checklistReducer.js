@@ -15,6 +15,7 @@ export default function checklistReducer(
     case types.FETCH_CHECKLISTS_SUCCESS:
       return action.checklists;
     case types.DELETE_CHECKLIST_OPTIMISTIC:
+      // optimistic delete: just a quick filter to exclude relevant id
       return state.filter(checklist => checklist.id !== action.checklist.id);
     default:
       return state;

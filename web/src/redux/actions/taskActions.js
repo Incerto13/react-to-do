@@ -18,6 +18,7 @@ export function fetchTasks() {
   };
 }
 
+
 /* this method creates one of two potential actions on a conditional basis
  either update or create depending on if there's already an id
 */
@@ -29,6 +30,19 @@ export function saveTask(task) {
         task.id
           ? dispatch({ type: types.UPDATE_TASK_SUCCESS, task: savedTask })
           : dispatch({ type: types.CREATE_TASK_SUCCESS, task: savedTask });
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+export function updateTasks(tasks) {
+  return function(dispatch, getState) {
+    return taskApi
+      .updateTasks(tasks)
+      .then(updatedTasks => {
+          dispatch({ type: types.UPDATE_TASKS_SUCCESS, tasks: updatedTasks });
       })
       .catch(error => {
         throw error;

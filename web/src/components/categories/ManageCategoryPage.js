@@ -52,8 +52,6 @@ function ManageCategoryPage({ categories, history, ...props }) {
     props.actions
       .saveCategory(category)
       .then(() => {
-        console.log(category);
-        toast.success("Category saved.");
         // history is passed in from react-router from <Route>
         history.push("/categories"); // redirect to '/categories' page
       })
@@ -76,21 +74,21 @@ function ManageCategoryPage({ categories, history, ...props }) {
   );
 }
 
-export function getCategoryBySlug(categories, slug) {
+export function getCategoryById(categories, id) {
   /* This is where we're getting the specific category to show/edit in teh form, from url.
-  This returns the category that matches the given slug in url or returns null
+  This returns the category that matches the given id in url or returns null
   */
-  return categories.find(category => category.slug === slug) || null;
+  return categories.find(category => category.id == id) || null;
 }
 
 // which parts of the state (DEPARTMENTS) to expose this component via props
 function mapStateToProps(state, ownProps) {
-  /* ownProps has routing related props from React Router, including URL data, i.e. slug */
-  const slug = ownProps.match.params.slug; // this is how we get the slug to i.d. the right category
+  /* ownProps has routing related props from React Router, including URL data, i.e. id */
+  const id = ownProps.match.params.id; // this is how we get the id to grab the right category
   const category =
-    slug && state.categories.length > 0
-      ? getCategoryBySlug(state.categories, slug)
-      : newCategory; // post-backs w/ newCategory until category has loaded from slug
+    id && state.categories.length > 0
+      ? getCategoryById(state.categories, id)
+      : newCategory; // post-backs w/ newCategory until category has loaded from id
 
   return {
     category,

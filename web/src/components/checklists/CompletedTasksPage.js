@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import * as taskActions from "../../redux/actions/taskActions";
 import * as checklistActions from "../../redux/actions/checklistActions";
+import * as categoryActions from "../../redux/actions/categoryActions";
 import { bindActionCreators } from "redux";
 import CompletedTaskList from "./CompletedTaskList";
 
-/* Loads all checklists and gives option to edit/delete each one 
-and a button to add a new task in the upper right corner */
 
-function CompletedTasksPage({ checklists, ...props }) {
+function CompletedTasksPage({ tasks, checklists, categories, ...props }) {
   const [completedTasks, setCompletedTasks] = useState([]);
 
   useEffect(() => {
-    if (checklists.length === 0) {
-      props.actions.fetchChecklists().catch(error => {
-        alert("Loading checklists failed" + error);
-      });
+    if (tasks.length === 0 || checklists.length === 0 || categories.length === 0) {
+      props.actions.fetchTasks()
+        .then(() => {
+          props.actions.fetchChecklists()
+          .then(() => {
+            props.actions.fetchCategories()
+              .catch(error => {
+                alert("Loading categories failed" + error);
+              })
+            })
+            .catch(error => {
+            alert("Loading checklists failed" + error);
+          });
+        })
+        .catch(error => {
+          alert("Loading tasks failed" + error);
+        });
     } else {
       // set checklist in local state to update when prop updates
       const newCompletedTasks = [];
-      for (let checklist of checklists) {
-        for (let task of checklist.tasks) {
-          if (task.completed === true) {
-            newCompletedTasks.push({
-              checklistId: checklist.id,
-              checklistTitle: checklist.title,
-              checklistSlug: checklist.slug,
-              taskId: task.id,
-              taskTitle: task.title,
-              body: task.body,
-              category: task.category,
-              timeOfCompletion: task.timeOfCompletion
-            });
-          }
+      for (let task of tasks) {
+        if (task.completed === true) {
+          newCompletedTasks.push({
+            ...task,
+            checklistTitle: task.checklistId ? checklists.find((checklist) => checklist.id == task.checklistId).title : '',
+            categoryName: categories.find((category) => category.id == task.categoryId).name,
+            timeOfCompletion: task.timeOfCompletion
+          });
         }
       }
 
@@ -56,14 +63,18 @@ function CompletedTasksPage({ checklists, ...props }) {
 // which parts of the state (DEPARTMENTS) to expose this component via props
 function mapStateToProps(state) {
   return {
-    checklists: state.checklists
+    tasks: state.tasks,
+    checklists: state.checklists,
+    categories: state.categories
   };
 }
 
 /* must specify the type for each prop (from mapStateToProps above)
  */
 CompletedTasksPage.propTypes = {
+  tasks: PropTypes.array.isRequired,
   checklists: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
 
@@ -71,8 +82,16 @@ CompletedTasksPage.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
+      fetchTasks: bindActionCreators(
+        taskActions.fetchTasks,
+        dispatch
+      ),
       fetchChecklists: bindActionCreators(
         checklistActions.fetchChecklists,
+        dispatch
+      ),
+      fetchCategories: bindActionCreators(
+        categoryActions.fetchCategories,
         dispatch
       )
     }

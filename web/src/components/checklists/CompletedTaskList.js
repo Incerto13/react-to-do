@@ -28,16 +28,16 @@ const CompletedTaskList = props => {
           return (
             <tr key={index}>
               <td></td>
-              <td>{task.taskTitle}</td>
+              <td>{task.title}</td>
               <td>{task.body}</td>
-              <td>{task.category}</td>
+              <td>{task.categoryName}</td>
               <td>
                 <Moment format="MM/DD/YYYY h:mma">
                   {task.timeOfCompletion}
                 </Moment>
               </td>
               <td>
-                <Link to={"/checklist/view/" + task.checklistSlug}>
+                <Link to={"/checklist/view/" + task.checklistId}>
                   {task.checklistTitle}
                 </Link>
               </td>

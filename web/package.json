@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "run-p start:dev start:api",
+    "start": "run-p start:dev",
     "start:dev": " react-scripts start",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "json-server": "^0.15.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "npm-run-all": "^4.1.5",

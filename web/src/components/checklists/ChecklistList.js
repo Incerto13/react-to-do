@@ -7,60 +7,69 @@ import { Link } from "react-router-dom";
 const ChecklistList = props => {
   const { checklists, onDeleteClick } = props;
 
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th />
-          <th>Title</th>
-          <th>Tasks</th>
-          <th>Category</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody>
-        {checklists.map(checklist => {
-          return (
-            <tr key={checklist.id}>
-              <td></td>
-              <td>
-                <Link to={"/checklist/view/" + checklist.slug}>
-                  {checklist.title}
-                </Link>
-              </td>
-              <td>
-                {checklist.tasks.slice(0, 3).map(task => {
-                  return (
-                    <ul key={task.title}>
-                      <li>{task.title}</li>
-                    </ul>
-                  );
-                })}
-              </td>
-              <td>
-                {checklist.tasks.slice(0, 3).map(task => {
-                  return (
-                    <ul style={{ listStyleType: "none" }} key={task.title}>
-                      <li>{task.category}</li>
-                    </ul>
-                  );
-                })}
-              </td>
 
-              <td>
-                <button
-                  className="btn btn-outline-danger"
-                  onClick={() => onDeleteClick(checklist)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
+
+  if (checklists) {
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            <th />
+            <th>Title</th>
+            <th>Tasks</th>
+            <th>Category</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {checklists.map(checklist => {
+            return (
+              <tr key={checklist.id}>
+                <td></td>
+                <td>
+                  <Link to={"/checklist/view/" + checklist.id}>
+                    {checklist.title}
+                  </Link>
+                </td>
+                
+                <td>
+                  {checklist.tasks.slice(0, 3).map(task => {
+                    return (
+                      <ul key={task.title}>
+                        <li>{task.title}</li>
+                      </ul>
+                    );
+                  })}
+                </td>
+                <td>
+                  {checklist.tasks.slice(0, 3).map(task => {
+                    return (
+                      <ul style={{ listStyleType: "none" }} key={task.title}>
+                        <li>{task.categoryName}</li>
+                      </ul>
+                    );
+                  })}
+                </td>
+  
+                <td>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => onDeleteClick(checklist)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  } 
+  else {
+    return <p>loading...</p>
+  }
+
 };
 
 ChecklistList.propTypes = {

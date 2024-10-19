@@ -6,7 +6,7 @@ export const newChecklist = {
       id: 1,
       title: "",
       body: "",
-      category: "",
+      categoryId: "",
       completed: false,
       timeOfCompletion: null
     },
@@ -14,7 +14,7 @@ export const newChecklist = {
       id: 2,
       title: "",
       body: "",
-      category: "",
+      categoryId: "",
       completed: false,
       timeOfCompletion: null
     }

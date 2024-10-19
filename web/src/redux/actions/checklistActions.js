@@ -3,6 +3,11 @@ import * as checklistApi from "../../api/checklistApi";
 
 // These are ACTION CREATORS for the checklist reducer (department) of the store
 
+export function resetData() {
+  return { type: types.RESET_DATA}
+}
+
+
 // ensures that each time we fetch checklists, they will be sorted
 function sortChecklistTasks(checklists) {
   for (let checklist of checklists) {

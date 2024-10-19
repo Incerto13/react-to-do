@@ -102,7 +102,7 @@ function createSlug(value) {
 I don't see where this code is being applied */
 function validateTask(task) {
   if (!task.title) return "Title is required.";
-  if (!task.category) return "Category is required.";
+  if (!task.categoryId) return "Category is required.";
   return "";
 }
 

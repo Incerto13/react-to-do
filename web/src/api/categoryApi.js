@@ -2,7 +2,6 @@ import { handleResponse, handleError } from "./apiUtils";
 const baseUrl = process.env.REACT_APP_TO_DO_DOMAIN_SERVER + "/categories/";
 
 export function getCategories() {
-  console.log('baseUrl: ', baseUrl)
   // fetch defaults to "GET" method
   return fetch(baseUrl)
     .then(handleResponse)

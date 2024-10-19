@@ -2,17 +2,21 @@
 ## Installation
 ```bash
 # requirements: node 16
+# install web app libraries
 cd /web
 npm install
 cd ..
+# install server libraries
 cd /server
 npm install
+# install tmux for bash scripts
+brew install tmux
 ```
 
 ## Running locally
 ```bash
 # from root directory
-bash run-dev.sh
+bash run-local.dev.sh
 ```
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -22,9 +26,15 @@ bash run-docker.dev.sh
 ```
 Open [http://localhost:8010](http://localhost:8010) to view it in the browser.
 
-## Running in docker
+## Running in docker (pull images)
 ```bash
 bash run-docker.sh
 ``` 
+
+### Running TypeOrm Migrations on Server App
+```bash
+cd server
+name=new-migration npm run migration:generate
+```
 
 

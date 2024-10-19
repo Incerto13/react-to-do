@@ -7,12 +7,20 @@ Remember, whatever you return from the reducer becomes the new state.
 */
 export default function taskReducer(state = initialState.tasks, action) {
   switch (action.type) {
+    case types.RESET_DATA:
+      return initialState; // Resets the state to the initial state
     case types.CREATE_TASK_SUCCESS:
       return [...state, { ...action.task }];
     case types.UPDATE_TASK_SUCCESS:
-      return state.map(task =>
-        task.id === action.task.id ? action.task : task
-      );
+      return [...state, { ...action.task }];
+      // return state.map(task =>
+      //   task.id === action.task.id ? action.task : null
+      // );
+      // return state.map(task =>
+      //   task.id === action.task.id ? action.task : task
+      // );
+    case types.UPDATE_TASKS_SUCCESS:
+      return action.tasks;
     case types.FETCH_TASKS_SUCCESS:
       return action.tasks;
     case types.DELETE_TASK_OPTIMISTIC:

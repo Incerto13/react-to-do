@@ -68,12 +68,12 @@ const ChecklistForm = ({
               />
 
               <SelectInput
-                name="category"
+                name="categoryId"
                 label="Category"
-                value={task.category}
+                value={task.categoryId}
                 defaultOption="Select Category"
                 options={categories.map(category => ({
-                  value: category.name,
+                  value: category.id,
                   text: category.name
                 }))}
                 onChange={event => onChange(event, index)}

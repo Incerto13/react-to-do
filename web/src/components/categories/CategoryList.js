@@ -20,7 +20,7 @@ const CategoryList = props => {
             <tr key={category.id}>
               <td></td>
               <td>
-                <Link to={"/category/" + category.slug}>{category.name}</Link>
+                <Link to={"/category/" + category.id}>{category.name}</Link>
               </td>
               <td>
                 <button

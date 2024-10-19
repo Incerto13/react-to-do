@@ -15,6 +15,7 @@ const TaskForm = ({
   saving = false,
   errors = {}
 }) => {
+
   return (
     <form onSubmit={onSave}>
       <h2>{task.id ? "Edit" : "Add"} Task</h2>
@@ -32,16 +33,16 @@ const TaskForm = ({
       />
 
       <SelectInput
-        name="category"
+        name="categoryId"
         label="Category"
-        value={task.category}
+        value={task.categoryId}
         defaultOption="Select Category"
         options={categories.map(category => ({
-          value: category.name,
+          value: category.id,
           text: category.name
         }))}
         onChange={onChange}
-        error={errors.category}
+        error={errors.categoryId}
       />
 
       <TextInput

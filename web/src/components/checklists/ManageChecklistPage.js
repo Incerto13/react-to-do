@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as checklistActions from "../../redux/actions/checklistActions";
 import * as categoryActions from "../../redux/actions/categoryActions";
+import * as taskActions from "../../redux/actions/taskActions";
 import ChecklistForm from "./ChecklistForm";
 import { newChecklist, newTask } from "./newChecklist";
 import { bindActionCreators } from "redux";
@@ -14,6 +15,9 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
   const [checklist, setChecklist] = useState({ ...props.checklist });
   const [errors, setErrors] = useState({}); // initialize to empty object
   const [saving, setSaving] = useState(false);
+  const [updatingChecklist, setUpdatingChecklist] = useState(false);
+  const [updatingTasks, setUpdatingTasks] = useState(null)
+  const [redirectAfterSave, setRedirectAfterSave] = useState(false);
 
   useEffect(() => {
     if (checklists.length === 0) {
@@ -64,8 +68,8 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
     const titles = checklist.tasks.filter(task => {
       return task.title;
     });
-    const categories = checklist.tasks.filter(task => {
-      return task.category;
+    const categoryIds = checklist.tasks.filter(task => {
+      return task.categoryId;
     });
 
     if (!title) errors.title = "Title is required.";
@@ -74,7 +78,7 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
       alert(errors.tasks);
     }
     if (titles.length !== tasks.length) errors.titles = "Title is required.";
-    if (categories.length !== tasks.length)
+    if (categoryIds.length !== tasks.length)
       errors.categories = "Category is required.";
 
     setErrors(errors);
@@ -82,39 +86,88 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
     return Object.keys(errors).length === 0;
   }
 
-  function handleSave(event) {
+  function handleSaveChecklist(event) {
     event.preventDefault();
     if (!formIsValid()) return;
     setSaving(true);
     props.actions
       .saveChecklist(checklist)
-      .then(() => {
-        console.log(checklist);
+      .then((res) => {
         toast.success("Checklist saved.");
-        // history is passed in from react-router from <Route>
-        history.push("/checklists"); // redirect to '/tasks' page
+          // fetch checklists (in case checklist is new)
+          props.actions
+            .fetchChecklists()
       })
       .catch(error => {
-        setSaving(false);
         setErrors({ onSave: error.message });
       });
+    setUpdatingChecklist(true)
   }
+
+  useEffect(() => {
+    if (saving && updatingChecklist && checklists.length > 0) {
+    // grab checklist by title (in case it's new and didn't have an id)
+    const uC = getChecklistByTitle(checklists, checklist.title)
+      if (uC) {
+        handleSaveTasks(uC)
+      }
+    }
+  },[saving, updatingChecklist && checklists.length, checklist.title])
+
+  function handleSaveTasks(updatedChecklist) {
+    for (const [index, task] of checklist.tasks.entries()) {
+      if (!task.checklistId) {
+        // checklist was new, give task new checklist's id and clear taskId so api knows to POST
+        task.checklistId = updatedChecklist.id
+        task.id = null
+      }
+        props.actions
+          .saveTask(task)
+          .then(res => {
+            // trigger flag after last task
+            if(index === checklist.tasks.length - 1) {
+              setUpdatingTasks(true)
+            }
+          })
+          .catch(error => {
+            setErrors({ onSave: error.message });
+          });
+    }
+  }
+
+  useEffect(() => {
+    if (saving && updatingChecklist && updatingTasks)
+    props.actions
+      .fetchChecklists()
+      .then(res => {
+          setRedirectAfterSave(true)
+      })
+      .catch(error => {
+      setErrors({ onSave: error.message });
+    });
+
+    // Return a cleanup function
+    return () => {
+      setRedirectAfterSave(false);
+    };
+
+  },[saving, updatingChecklist, updatingTasks])
+
+  useEffect(() => {
+    if (saving && updatingChecklist && updatingTasks && redirectAfterSave) {
+      // fetch to see refreshed data
+      // history is passed in from react-router from <Route>
+      history.push("/checklists"); // redirect to '/tasks' page
+    }
+  }, [saving, updatingChecklist, updatingTasks, redirectAfterSave, history, props.actions])
 
   function handleAddTask(event) {
     event.preventDefault();
     const newTasks = checklist.tasks.map(task => {
       return { ...task };
     });
-
-    const taskIds = newTasks
-      .map(task => {
-        return task.id;
-      })
-      .sort();
-    const newId = taskIds[taskIds.length - 1] + 1; // increment max current index by 1
-    console.log("newId: ", newId);
-    newTask.id = newId;
-    newTasks.push(newTask); // insert empty task
+    newTask.checklistId = checklist.id // add to this checklist
+    newTasks.push(newTask); // insert empty task with no id (will be created when saving form)
     setChecklist(prevChecklist => ({
       ...prevChecklist,
       tasks: newTasks
@@ -131,40 +184,63 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
       ...prevChecklist,
       tasks: newTasks
     }));
+    const task = checklist.tasks[index]
+    if (task.id) {
+      // only delete tasks that have been saved
+      props.actions
+      .deleteTask(task)
+      .then(() => {
+        toast.success("Task deleted.");
+      })
+      .catch(error => {
+        alert("Deleting tasks failed" + error);
+      });
+    }
   }
 
-  return (
-    <>
-      <div>
-        <ChecklistForm
-          checklist={checklist}
-          tasks={checklist.tasks}
-          categories={categories}
-          handleAddTask={handleAddTask}
-          handleDeleteTask={handleDeleteTask}
-          errors={errors}
-          onChange={handleChange}
-          onSave={handleSave}
-          saving={saving}
-        />
-      </div>
-    </>
-  );
+  if (!saving) {
+    return (
+      <>
+        <div>
+          <ChecklistForm
+            checklist={checklist}
+            tasks={checklist.tasks}
+            categories={categories}
+            handleAddTask={handleAddTask}
+            handleDeleteTask={handleDeleteTask}
+            errors={errors}
+            onChange={handleChange}
+            onSave={handleSaveChecklist}
+            saving={saving}
+          />
+        </div>
+      </>
+    );
+  }
+   else {
+    return <p>loading...</p>
+   }
+
 }
 
-export function getChecklistBySlug(checklists, slug) {
-  // return the checklist that matches the given slug in url or return null
-  return checklists.find(checklist => checklist.slug === slug) || null;
+export function getChecklistById(checklists, id) {
+  // return the checklist that matches the given id in url or return null
+  return checklists.find(checklist => checklist.id == id) || null;
+}
+
+export function getChecklistByTitle(checklists, title) {
+  // return the checklist that matches the given id in url or return null
+  return checklists.find(checklist => checklist.title === title) || null;
 }
 
 // which parts of the state (DEPARTMENTS) to expose this component via props
 function mapStateToProps(state, ownProps) {
-  /* ownProps has routing related props from React Router, including URL data, i.e. slug */
-  const slug = ownProps.match.params.slug;
+  /* ownProps has routing related props from React Router, including URL data, i.e. id */
+  const id = ownProps.match.params.id;
   const checklist =
-    slug && state.checklists.length > 0
-      ? getChecklistBySlug(state.checklists, slug)
-      : newChecklist; // post-backs w/ newCategory until category has loaded from slug
+    id && state.checklists.length > 0
+      ? getChecklistById(state.checklists, id)
+      : newChecklist; // post-backs w/ newCategory until category has loaded from id
   return {
     checklist,
     checklists: state.checklists,
@@ -196,6 +272,14 @@ function mapDispatchToProps(dispatch) {
       ),
       saveChecklist: bindActionCreators(
         checklistActions.saveChecklist,
+        dispatch
+      ),
+      deleteTask: bindActionCreators(
+        taskActions.deleteTask,
+        dispatch
+      ),
+      saveTask: bindActionCreators(
+        taskActions.saveTask,
         dispatch
       )
     }

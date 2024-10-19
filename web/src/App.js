@@ -24,17 +24,17 @@ function App() {
         <Route exact path="/tasks" component={TasksPage} />
         <Route exact path="/categories" component={CategoriesPage} />
         <Route exact path="/checklists" component={ChecklistsPage} />
-        {/* slug route needs to come before  */}
-        <Route exact path="/task/:slug" component={ManageTaskPage} />
+        {/* id route needs to come first  */}
+        <Route exact path="/task/:id" component={ManageTaskPage} />
         <Route exact path="/task" component={ManageTaskPage} />
-        <Route exact path="/category/:slug" component={ManageCategoryPage} />
+        <Route exact path="/category/:id" component={ManageCategoryPage} />
         <Route exact path="/category" component={ManageCategoryPage} />
         <Route
           exact
-          path="/checklist/view/:slug"
+          path="/checklist/view/:id"
           component={ChecklistViewPage}
         />
-        <Route exact path="/checklist/:slug" component={ManageChecklistPage} />
+        <Route exact path="/checklist/:id" component={ManageChecklistPage} />
         <Route exact path="/checklist" component={ManageChecklistPage} />
         <Route exact path="/completed-tasks/" component={CompletedTasksPage} />
         {/* PageNotFound works automatically by placing it last within switch */}

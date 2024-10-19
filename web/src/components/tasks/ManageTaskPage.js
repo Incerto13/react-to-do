@@ -34,6 +34,7 @@ function ManageTaskPage({ tasks, categories, history, ...props }) {
       });
     }
   }, [props.task, categories.length, props.actions, tasks.length]);
+
   // centralized change-handler
   function handleChange(event) {
     const { name, value } = event.target; // retain local ref to event
@@ -44,11 +45,11 @@ function ManageTaskPage({ tasks, categories, history, ...props }) {
   }
 
   function formIsValid() {
-    const { title, category } = task;
+    const { title, categoryId } = task;
     const errors = {};
 
     if (!title) errors.title = "Title is required.";
-    if (!category) errors.category = "Category is required.";
+    if (!categoryId) errors.categoryId = "Category is required.";
 
     setErrors(errors);
     // Form is valid if the errors object still has no properties
@@ -62,7 +63,6 @@ function ManageTaskPage({ tasks, categories, history, ...props }) {
     props.actions
       .saveTask(task)
       .then(() => {
-        console.log(task);
         toast.success("Task saved.");
         // history is passed in from react-router from <Route>
         history.push("/tasks"); // redirect to '/tasks' page
@@ -87,17 +87,17 @@ function ManageTaskPage({ tasks, categories, history, ...props }) {
   );
 }
 
-export function getTaskBySlug(tasks, slug) {
-  // return the task that matches the given slug in url or return null
-  return tasks.find(task => task.slug === slug) || null;
+export function getTaskById(tasks, id) {
+  // return the task that matches the given id in url or return null
+  return tasks.find(task => task.id == id) || null;
 }
 
 // which parts of the state (DEPARTMENTS) to expose this component via props
 function mapStateToProps(state, ownProps) {
-  /* ownProps has routing related props from React Router, including URL data, i.e. slug */
-  const slug = ownProps.match.params.slug;
+  /* ownProps has routing related props from React Router, including URL data, i.e. id */
+  const id = ownProps.match.params.id
   const task =
-    slug && state.tasks.length > 0 ? getTaskBySlug(state.tasks, slug) : newTask;
+    id && state.tasks.length > 0 ? getTaskById(state.tasks, id) : newTask;
 
   return {
     task,

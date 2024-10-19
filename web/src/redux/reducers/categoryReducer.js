@@ -19,6 +19,7 @@ export default function categoryReducer(
     case types.FETCH_CATEGORIES_SUCCESS:
       return action.categories;
     case types.DELETE_CATEGORY_OPTIMISTIC:
+      // optimistic delete: just a quick filter to exclude relevant id
       return state.filter(category => category.id !== action.category.id);
     default:
       return state;

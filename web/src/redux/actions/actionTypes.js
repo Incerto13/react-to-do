@@ -2,9 +2,15 @@
 take advantage of code-completion in the IDE
 */
 
+export const RESET_DATA = "RESET_DATA";
+
 export const FETCH_TASKS_SUCCESS = "FETCH_TASKS_SUCCESS";
 export const UPDATE_TASK_SUCCESS = "UPDATE_TASK_SUCCESS";
 export const CREATE_TASK_SUCCESS = "CREATE_TASK_SUCCESS";
+
+// batch actions
+// export const CREATE_TASKS_SUCCESS = "CREATE_TASKS_SUCCESS";
+export const UPDATE_TASKS_SUCCESS = "UPDATE_TASKS_SUCCESS";
 
 export const FETCH_CATEGORIES_SUCCESS = "FETCH_CATEGORIES_SUCCESS";
 export const UPDATE_CATEGORY_SUCCESS = "UPDATE_CATEGORY_SUCCESS";
