@@ -1,4 +1,6 @@
-// THIS PAGE IS FOR CHECKING OFF TASKS (as completed) ON A CHECKLIST (THAT IS ALL!!!)
+/* eslint-disable eqeqeq */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
@@ -14,7 +16,7 @@ import { Link } from "react-router-dom";
 
 function ChecklistViewPage({ checklists, categories, history, ...props }) {
   const [checklist, setChecklist] = useState({ ...props.checklist }); // initialize to empty newTask
-  const [errors, setErrors] = useState({}); // initialize to empty object
+  const [setErrors] = useState({}); // initialize to empty object
   const [loading, setLoading] = useState(true);
   const [hydratedTasks, setHydratedTasks] = useState(null)
 

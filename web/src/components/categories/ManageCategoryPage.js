@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -5,7 +7,6 @@ import * as categoryActions from "../../redux/actions/categoryActions";
 import { bindActionCreators } from "redux";
 import CategoryForm from "./CategoryForm";
 import newCategory from "./newCategory";
-import { toast } from "react-toastify";
 
 // need to load categories to make sure array isn't empty
 

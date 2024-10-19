@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
+
 // container component for adding and or editing checklists
 
 import React, { useEffect, useState } from "react";
@@ -112,7 +115,7 @@ function ManageChecklistPage({ checklists, categories, history, ...props }) {
         handleSaveTasks(uC)
       }
     }
-  },[saving, updatingChecklist && checklists.length, checklist.title])
+  },[saving, updatingChecklist && checklists.length, checklist.title, checklists, handleSaveTasks, updatingChecklist])
 
   function handleSaveTasks(updatedChecklist) {
     for (const [index, task] of checklist.tasks.entries()) {

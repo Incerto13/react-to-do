@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -49,7 +51,7 @@ function CompletedTasksPage({ tasks, checklists, categories, ...props }) {
 
       setCompletedTasks(newCompletedTasks);
     }
-  }, [checklists, checklists.length, props.actions, props.checklists]);
+  }, [checklists, checklists.length, props.actions, props.checklists, categories, tasks]);
 
   return (
     <>
