@@ -1,6 +1,8 @@
 import { handleResponse, handleError } from "./apiUtils";
 const baseUrl = `${process.env.REACT_APP_TO_DO_DOMAIN_SERVER}/tasks`;
 
+console.log('baseUrl: ', baseUrl)
+
 export function getTasks() {
   // fetch defaults to "GET" method
   return fetch(baseUrl)

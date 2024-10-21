@@ -33,17 +33,22 @@ services:
     container_name: react-to-do_server
     build:
       context: ./server
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
+    environment:
+      TYPEORM_HOST: react-to-do_postgres
     restart: unless-stopped
     ports:
       - 8110:3001
+    depends_on:
+      react-to-do_postgres:
+        condition: service_healthy
 
   react-to-do_web:
     container_name: react-to-do_web
     env_file: ./web/.env
     build:
       context: ./web
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
     restart: unless-stopped
     ports:
       - 8010:80

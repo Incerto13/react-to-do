@@ -11,7 +11,12 @@ async function bootstrap() {
   const port = 3001;
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
-  var whitelist = ['http://localhost', 'http://localhost:3000', 'https://react-to-do.incertotech.com', 'http://react-to-do.staging.incertotech.com'];
+  var whitelist = [
+    'http://localhost:3000', // local dev
+    'http://localhost:8010', // docker dev 
+    'https://react-to-do.incertotech.com', 
+    'http://react-to-do.staging.incertotech.com'
+  ];
   app.enableCors({
     origin: function (origin, callback) {
       // if origin is undefined, then the call is coming from same origin and wasn't 
