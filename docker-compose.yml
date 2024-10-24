@@ -14,7 +14,7 @@ services:
     container_name: react-to-do_server
     build:
       context: ./server
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/server/Dockerfile
 
   react-to-do_web:
     image: incerto13/react-to-do_web:${ENV}-latest
