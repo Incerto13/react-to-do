@@ -4,8 +4,8 @@
 services:
 
   react-to-do_postgres:
-    container_name: react-to-do_postgres
     image: incerto13/react-to-do_postgres:${ENV}-latest
+    container_name: react-to-do_postgres
     build:
       context: ./server
       dockerfile: ./docker/postgres/Dockerfile   
