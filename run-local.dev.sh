@@ -2,18 +2,19 @@
 
 # Note: local postgres service must be off for nest.js server to start
 
-# generate .env file in web directory
+# generate .env file in web and server directories
 source ../.env
-printf "REACT_APP_TO_DO_DOMAIN_SERVER=$REACT_APP_TO_DO_DOMAIN_SERVER\nTYPEORM_HOST=localhost" > web/.env
-echo "successfully created web/.env file"
+printf "REACT_APP_TO_DO_SERVER_URL=$REACT_APP_TO_DO_SERVER_URL" > web/.env
+printf "REACT_TO_DO_TYPEORM_HOST=$REACT_TO_DO_TYPEORM_HOST\nREACT_TO_DO_POSTGRES_PORT=$REACT_TO_DO_POSTGRES_PORT\n" > server/.env
+echo "successfully created web/.env  and server/.env files"
 
 # clean docker
 docker stop react-to-do_postgres react-to-do_pgweb
-make -C ../ docker-clean
+docker system prune -af
 
 # run postgres and pgweb in docker
 echo "starting postgres and pgweb containers..."
-docker compose -f docker-compose.dev.yml up -d react-to-do_postgres react-to-do_pgweb
+docker compose -f docker-compose.dev.yml --env-file ../.env up -d react-to-do_postgres react-to-do_pgweb
 
 # run server and web locally via tmux
 Start a new tmux session named 'react-to-do'

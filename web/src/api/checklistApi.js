@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.REACT_APP_TO_DO_DOMAIN_SERVER + "/checklists/";
+const baseUrl = process.env.REACT_APP_TO_DO_SERVER_URL + "/checklists/";
 
 console.log('baseUrl: ', baseUrl)
 

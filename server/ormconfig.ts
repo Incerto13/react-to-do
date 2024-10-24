@@ -1,18 +1,20 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import * as path from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
-// import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Category } from './src/category/entity/category.entity';
 import { Task } from './src/task/entity/task.entity';
 import { Checklist } from './src/checklist/entity/checklist.entity';
 
-const TYPEORM_HOST = process.env.TYPEORM_HOST || 'localhost';
+const REACT_TO_DO_TYPEORM_HOST = process.env.REACT_TO_DO_TYPEORM_HOST;
+const REACT_TO_DO_POSTGRES_PORT = Number(process.env.REACT_TO_DO_POSTGRES_PORT);
 
 export const configs = {
     type: 'postgres',
-    host: TYPEORM_HOST, // 'react-to-do_postgres',
-    port: 5432,
+    host: REACT_TO_DO_TYPEORM_HOST,
+    port: REACT_TO_DO_POSTGRES_PORT,
     username: 'postgres',
     password: 'postgres',
     database: 'react-to-do',

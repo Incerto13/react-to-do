@@ -42,9 +42,6 @@ export class TaskController {
         @Body() updateTasks: UpdateTaskDto[]
     ):  Promise<Task[]> {
         const idsArray = ids.split(',').map(id => parseInt(id, 10))
-        console.log('--------------------->')
-        console.log('idsArray: ', idsArray)
-        console.log('--------------------->')
         const updatedTasks = []
         for (const [index, id] of idsArray.entries()) {
             const updatedTask = await this.taskService.updateOne(id, updateTasks[index])

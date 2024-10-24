@@ -53,12 +53,6 @@ export class TaskService {
       throw new NotFoundException(`Task with ID: ${id} does not exist`);
     }
     const { title, body, categoryId, completed } = updateTask
-
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    console.log('title: ', title)
-    console.log('body: ', body)
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-
     task.title = title;
     task.body = body;
 

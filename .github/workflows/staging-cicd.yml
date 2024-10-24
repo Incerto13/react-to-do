@@ -25,5 +25,7 @@ jobs:
       - name: Build and Push to Docker Hub
         run: |
           bash run-docker.sh 
+          docker push incerto13/react-to-do_postgres:staging-latest 
+          docker push incerto13/react-to-do_pgweb:staging-latest 
           docker push incerto13/react-to-do_server:staging-latest 
           docker push incerto13/react-to-do_web:staging-latest 
