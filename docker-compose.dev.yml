@@ -3,13 +3,13 @@ services:
 
   react-to-do_postgres:
     container_name: react-to-do_postgres
+    build:
+      context: ./server
+      dockerfile: ./docker/postgres/Dockerfile   
     environment:      
       POSTGRES_DB: react-to-do     
       POSTGRES_USER: postgres      
       POSTGRES_PASSWORD: postgres
-    build:
-      context: ./server
-      dockerfile: ./docker/postgres/Dockerfile   
     ports:
       - "${REACT_TO_DO_POSTGRES_PORT}:5432"
     healthcheck:
@@ -31,12 +31,12 @@ services:
 
   react-to-do_server:
     container_name: react-to-do_server
-    environment:
-      REACT_TO_DO_TYPEORM_HOST: $REACT_TO_DO_TYPEORM_HOST
-      REACT_TO_DO_POSTGRES_PORT: $REACT_TO_DO_POSTGRES_PORT
     build:
       context: ./server
       dockerfile: ./docker/server/Dockerfile
+    environment:
+      REACT_TO_DO_TYPEORM_HOST: $REACT_TO_DO_TYPEORM_HOST
+      REACT_TO_DO_POSTGRES_PORT: $REACT_TO_DO_POSTGRES_PORT
     ports:
       - "${REACT_TO_DO_SERVER_PORT}:3001"
     depends_on:
