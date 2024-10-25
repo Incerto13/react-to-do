@@ -15,7 +15,7 @@ async function bootstrap() {
     'http://localhost:3000', // local dev
     'http://localhost:8010', // docker dev 
     'https://react-to-do.incertotech.com', 
-    'http://react-to-do.staging.incertotech.com'
+    'https://react-to-do.staging.incertotech.com'
   ];
   app.enableCors({
     origin: function (origin, callback) {
