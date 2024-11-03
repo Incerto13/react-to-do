@@ -19,8 +19,8 @@ export default function taskReducer(state = initialState.tasks, action) {
       // return state.map(task =>
       //   task.id === action.task.id ? action.task : task
       // );
-    case types.UPDATE_TASKS_SUCCESS:
-      return action.tasks;
+    // case types.UPDATE_TASKS_SUCCESS:
+    //   return action.tasks;
     case types.FETCH_TASKS_SUCCESS:
       return action.tasks;
     case types.DELETE_TASK_OPTIMISTIC:

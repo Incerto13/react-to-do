@@ -13,7 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   var whitelist = [
     'http://localhost:3000', // local dev
-    'http://localhost:8010', // docker dev 
+    'http://localhost:8010', // docker dev => REACT_TO_DO_URL
     'https://react-to-do.incertotech.com', 
     'https://react-to-do.staging.incertotech.com'
   ];

@@ -1,5 +1,6 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.REACT_APP_TO_DO_SERVER_URL + "/checklists/";
+const baseUrl = `${process.env.REACT_APP_TO_DO_SERVER_URL}/checklists`;
+
 
 
 export function getChecklists() {
@@ -10,7 +11,7 @@ export function getChecklists() {
 }
 
 export function saveChecklist(checklist) {
-  return fetch(baseUrl + (checklist.id || ""), {
+  return fetch(`${baseUrl}/${checklist.id || ""}`, {
     method: checklist.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
     body: JSON.stringify(checklist)
@@ -24,8 +25,8 @@ export function saveChecklist(checklist) {
 they are injected for us by the thunk middleware 
 without thunk, the signatures of these methods would differ depending on 
 whether or not they were synchronous or asynchronous */
-export function deleteChecklist(checklistId) {
-  return fetch(baseUrl + checklistId, { method: "DELETE" })
+export function deleteChecklist(id) {
+  return fetch(`${baseUrl}/${id}`, { method: "DELETE" })
     .then(handleResponse)
     .catch(handleError);
 }

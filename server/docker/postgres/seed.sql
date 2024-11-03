@@ -1,7 +1,7 @@
 -- -- Connect to the newly created database
 \c "react-to-do";
 
--- -- Create the categories table with id and name columns
+-- -- Create the categories table
 CREATE TABLE categories (
 	id serial4 NOT NULL,
 	"name" varchar NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE categories (
 	CONSTRAINT "K_category_name" UNIQUE (name)
 );
 
--- -- Create the categories table with id and name columns
+-- -- Create the tasks table
 CREATE TABLE tasks (
 	id serial4 NOT NULL,
 	title varchar NOT NULL,
@@ -17,6 +17,7 @@ CREATE TABLE tasks (
 	completed bool DEFAULT false NOT NULL,
 	"timeOfCompletion" timestamp NULL,
 	"categoryId" int4 NOT NULL,
+	"checklistId" int4 NULL,
 	CONSTRAINT "PK_task_id" PRIMARY KEY (id)
 );
 ALTER TABLE tasks ADD CONSTRAINT "FK_task_category_id" FOREIGN KEY ("categoryId") REFERENCES categories(id) ON DELETE CASCADE;
@@ -30,7 +31,7 @@ CREATE TABLE checklists (
 );
 
 -- add checklist foreign key to tasks
-ALTER TABLE tasks ADD COLUMN "checklistId" int4 NULL;
+-- ALTER TABLE tasks ADD COLUMN "checklistId" int4 NULL; ==> delete!!
 ALTER TABLE tasks ADD CONSTRAINT "FK_task_checklist_id" FOREIGN KEY ("checklistId") REFERENCES checklists(id) ON DELETE CASCADE;
 
 

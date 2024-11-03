@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = `${process.env.REACT_APP_TO_DO_SERVER_URL}/tasks/`;
+const baseUrl = `${process.env.REACT_APP_TO_DO_SERVER_URL}/tasks`;
 
 
 export function getTasks() {
@@ -19,16 +19,18 @@ export function saveTask(task) {
     .catch(handleError);
 }
 
-export function updateTasks(tasks) {
-  const ids = tasks.map((task) => task.id).join(',');
-  return fetch(`${baseUrl}?ids=${ids}`, {
-    method: "PUT", 
-    headers: { "content-type": "application/json"},
-    body: JSON.stringify(tasks)
-  })
-  .then(handleResponse)
-  .catch(handleError);
-}
+
+// TODO: delete
+// export function updateTasks(tasks) {
+//   const ids = tasks.map((task) => task.id).join(',');
+//   return fetch(`${baseUrl}?ids=${ids}`, {
+//     method: "PUT", 
+//     headers: { "content-type": "application/json"},
+//     body: JSON.stringify(tasks)
+//   })
+//   .then(handleResponse)
+//   .catch(handleError);
+// }
 
 // Redux-THunk  = Async Middleware
 /* with thunk you don't have to pass dispatch or state as arguments

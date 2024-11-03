@@ -1,5 +1,6 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.REACT_APP_TO_DO_SERVER_URL + "/categories/";
+const baseUrl = `${process.env.REACT_APP_TO_DO_SERVER_URL}/categories`;
+
 
 
 export function getCategories() {
@@ -10,7 +11,7 @@ export function getCategories() {
 }
 
 export function saveCategory(category) {
-  return fetch(baseUrl + (category.id || ""), {
+  return fetch(`${baseUrl}/${category.id || ""}`, {
     method: category.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
     body: JSON.stringify(category)
@@ -24,8 +25,8 @@ export function saveCategory(category) {
 they are injected for us by the thunk middleware
 without thunk, the signatures of these methods would differ depending on
 whether or not they were synchronous or asynchronous */
-export function deleteCategory(categoryId) {
-  return fetch(baseUrl + categoryId, { method: "DELETE" })
+export function deleteCategory(id) {
+  return fetch(`${baseUrl}/${id}`, { method: "DELETE" })
     .then(handleResponse)
     .catch(handleError);
 }

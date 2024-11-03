@@ -13,22 +13,22 @@ npm install
 brew install tmux
 ```
 
-## Running locally
+## Running locally (postgres and pgweb in docker with web and server running in terminal)
 ```bash
 # from root directory
 bash run-local.dev.sh
 ```
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Running in docker (build locally)
+## Running in docker (everything in docker, all built locally)
 ```bash
 bash run-docker.dev.sh
 ```
 Open [http://localhost:8010](http://localhost:8010) to view it in the browser.
 
-## Running in docker (pull images)
+## Build docker images (for postgres, server and web for ci pipeline)
 ```bash
-bash run-docker.sh
+bash build-docker.sh
 ``` 
 
 ### Running TypeOrm Migrations on Server App

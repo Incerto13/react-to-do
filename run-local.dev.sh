@@ -2,11 +2,13 @@
 
 # Note: local postgres service must be off for nest.js server to start
 
+nvm use 16
+
 # generate .env file in web and server directories
 source ../.env
 printf "REACT_APP_TO_DO_SERVER_URL=$REACT_APP_TO_DO_SERVER_URL" > web/.env
 printf "REACT_TO_DO_TYPEORM_HOST=$REACT_TO_DO_TYPEORM_HOST\nREACT_TO_DO_POSTGRES_PORT=$REACT_TO_DO_POSTGRES_PORT\n" > server/.env
-echo "successfully created web/.env  and server/.env files"
+echo "successfully created web/.env and server/.env files"
 
 # clean docker
 docker stop react-to-do_postgres react-to-do_pgweb

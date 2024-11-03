@@ -37,18 +37,19 @@ export function saveTask(task) {
   };
 }
 
-export function updateTasks(tasks) {
-  return function(dispatch, getState) {
-    return taskApi
-      .updateTasks(tasks)
-      .then(updatedTasks => {
-          dispatch({ type: types.UPDATE_TASKS_SUCCESS, tasks: updatedTasks });
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
+// TODO: delete
+// export function updateTasks(tasks) {
+//   return function(dispatch, getState) {
+//     return taskApi
+//       .updateTasks(tasks)
+//       .then(updatedTasks => {
+//           dispatch({ type: types.UPDATE_TASKS_SUCCESS, tasks: updatedTasks });
+//       })
+//       .catch(error => {
+//         throw error;
+//       });
+//   };
+// }
 
 export function deleteTask(task) {
   return function(dispatch) {

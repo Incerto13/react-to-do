@@ -14,14 +14,14 @@ export class Task {
   body: string;
 
   @ManyToOne(() => Category, category => category.tasks, { eager: true,  nullable: false })
-  @JoinColumn({ name: 'categoryId' }) // Foreign key in snake_case
+  @JoinColumn({ name: 'categoryId' })
   category: Category
 
   @Column({ nullable: false })
   categoryId: number;
 
   @ManyToOne(() => Checklist, checklist => checklist.tasks, { eager: true, nullable: true })
-  @JoinColumn({ name: 'checklistId' }) // Foreign key in snake_case
+  @JoinColumn({ name: 'checklistId' })
   checklist: Checklist
 
   @Column({ nullable: true })

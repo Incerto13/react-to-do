@@ -11,23 +11,22 @@ services:
       POSTGRES_USER: postgres      
       POSTGRES_PASSWORD: postgres
     ports:
-      - "${REACT_TO_DO_POSTGRES_PORT}:5432"
+      - "${REACT_TO_DO_POSTGRES_PORT}:${REACT_TO_DO_POSTGRES_PORT}"
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
   
   react-to-do_pgweb: 
     container_name: react-to-do_pgweb
     image: sosedoff/pgweb
     environment: 
-      PGWEB_DATABASE_URL: postgres://postgres:postgres@react-to-do_postgres:5432/react-to-do?sslmode=disable
+      PGWEB_DATABASE_URL: "postgres://postgres:postgres@react-to-do_postgres:${REACT_TO_DO_POSTGRES_PORT}/react-to-do?sslmode=disable"
     ports: 
       - "${REACT_TO_DO_PG_WEB_PORT}:8081"
-    depends_on:
-      react-to-do_postgres:
-        condition: service_healthy
+    restart: unless-stopped
 
   react-to-do_server:
     container_name: react-to-do_server
@@ -39,9 +38,6 @@ services:
       REACT_TO_DO_POSTGRES_PORT: $REACT_TO_DO_POSTGRES_PORT
     ports:
       - "${REACT_TO_DO_SERVER_PORT}:3001"
-    depends_on:
-      react-to-do_postgres:
-        condition: service_healthy
     restart: unless-stopped
 
   react-to-do_web:

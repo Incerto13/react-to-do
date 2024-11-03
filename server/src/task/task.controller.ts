@@ -36,19 +36,20 @@ export class TaskController {
         return updatedTask;
     }
 
-    @Put()
-    async updateTasks(
-        @Query('ids') ids: string, 
-        @Body() updateTasks: UpdateTaskDto[]
-    ):  Promise<Task[]> {
-        const idsArray = ids.split(',').map(id => parseInt(id, 10))
-        const updatedTasks = []
-        for (const [index, id] of idsArray.entries()) {
-            const updatedTask = await this.taskService.updateOne(id, updateTasks[index])
-            updatedTasks.push(updatedTask)
-        }
-        return updatedTasks;
-    }
+    // TODO: Delete
+    // @Put()
+    // async updateTasks(
+    //     @Query('ids') ids: string, 
+    //     @Body() updateTasks: UpdateTaskDto[]
+    // ):  Promise<Task[]> {
+    //     const idsArray = ids.split(',').map(id => parseInt(id, 10))
+    //     const updatedTasks = []
+    //     for (const [index, id] of idsArray.entries()) {
+    //         const updatedTask = await this.taskService.updateOne(id, updateTasks[index])
+    //         updatedTasks.push(updatedTask)
+    //     }
+    //     return updatedTasks;
+    // }
 
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT) // 204 No Content
