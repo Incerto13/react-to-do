@@ -20,6 +20,7 @@ CREATE TABLE tasks (
 	"checklistId" int4 NULL,
 	CONSTRAINT "PK_task_id" PRIMARY KEY (id)
 );
+-- add category foreign key to tasks
 ALTER TABLE tasks ADD CONSTRAINT "FK_task_category_id" FOREIGN KEY ("categoryId") REFERENCES categories(id) ON DELETE CASCADE;
 
 -- -- Cretae checklists table
@@ -29,9 +30,7 @@ CREATE TABLE checklists (
 	CONSTRAINT "PK_checklist_id" PRIMARY KEY (id),
 	CONSTRAINT "K_checklist_title" UNIQUE (title)
 );
-
 -- add checklist foreign key to tasks
--- ALTER TABLE tasks ADD COLUMN "checklistId" int4 NULL; ==> delete!!
 ALTER TABLE tasks ADD CONSTRAINT "FK_task_checklist_id" FOREIGN KEY ("checklistId") REFERENCES checklists(id) ON DELETE CASCADE;
 
 

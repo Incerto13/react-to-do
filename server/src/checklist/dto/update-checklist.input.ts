@@ -1,8 +1,10 @@
-import { ArrayMinSize, IsArray, IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
 
 
 export class UpdateChecklistDto {
 
+  @ApiProperty()
   @IsString()
   title: string;
 }
