@@ -17,7 +17,9 @@ async function bootstrap() {
     'http://localhost:8010', // docker dev
     'https://react-to-do.staging.incertotech.com', // staging
     'https://react-to-do.incertotech.com', // prod
-    'http://localhost:3001', // swagger
+    'http://localhost:3001', // swagger local and docker dev
+    'https://nest-to-do-api.staging.incertotech.com', // swagger in staging
+    'https://nest-to-do-api.incertotech.com' // swagger in prod
   ];
 
   // Enable CORS
